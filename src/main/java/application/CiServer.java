@@ -1,8 +1,5 @@
 package application;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -13,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import utils.MavenTestRunner;
 
 /**
  * Skeleton of a ContinuousIntegrationServer which acts as webhook
@@ -45,7 +47,10 @@ public class CiServer extends AbstractHandler {
 
         System.out.println("Webhook Payload: " + jsonNode.toPrettyString());
 
-        response.getWriter().println("CI job done");
+        System.out.println("Starting test");
+        MavenTestRunner.runMavenTest();
+
+        response.getWriter().println("Test job done");
 
     }
 
