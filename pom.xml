@@ -48,7 +48,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>application.CiServer</mainClass>
+                            <mainClass>dd2480.group17.ciserver.application.CIServerApplication.CiServer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -82,7 +82,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>application.CiServer</mainClass>
+                    <mainClass>dd2480.group17.ciserver.application.CIServerApplication.CiServer</mainClass>
                 </configuration>
             </plugin>
         </plugins>

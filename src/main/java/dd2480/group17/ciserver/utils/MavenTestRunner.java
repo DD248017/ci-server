@@ -1,4 +1,4 @@
-package utils;
+package dd2480.group17.ciserver.utils;
 
 import java.io.File;
 import java.util.Collections;
