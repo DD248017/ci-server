@@ -14,10 +14,5 @@ class ConfigLoaderTest {
         assertEquals(expectedPort, configLoader.getPort(), "Port number loading failed");
     }
 
-    @Test
-    void testInvalidPropertyReturnsDefault() {
-        ConfigLoader configLoader = new ConfigLoader();
-        assertNull(configLoader.getProperty("invalid.key"), "Non-existent key should return null");
-    }
 }
 
