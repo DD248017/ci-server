@@ -5,27 +5,21 @@ import dd2480.group17.ciserver.utils.MavenTestRunner;
 
 public class MavenExecutor {
 
-    // Metodo per eseguire la compilazione Maven
+    // Function to compile Maven
     public void runCompile() {
         System.out.println("Starting Maven compilation...");
         MavenCompileRunner.runMavenCompile();
     }
 
-    // Metodo per eseguire i test Maven
+    // Function to test Maven
     public void runTest() {
         System.out.println("Starting Maven tests...");
         MavenTestRunner.runMavenTest();
     }
 
-    // Metodo per eseguire entrambe le operazioni (compilazione e test)
-    public void runAll() {
+    // Function to compile and test Maven
+    public void runCompileAndTest() {
         runCompile();
         runTest();
-    }
-
-    public static void main(String[] args) {
-        // Eseguiamo tutto: compilazione e test
-        MavenExecutor executor = new MavenExecutor();
-        executor.runAll();
     }
 }
