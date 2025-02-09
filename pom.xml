@@ -20,6 +20,14 @@
             <version>6.7.0.202309050840-r</version>
         </dependency>
 
+        <!-- Mockito -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Jetty Aggregate All -->
         <dependency>
             <groupId>org.eclipse.jetty.aggregate</groupId>
