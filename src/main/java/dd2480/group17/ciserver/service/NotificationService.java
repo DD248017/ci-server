@@ -8,11 +8,11 @@ public class NotificationService {
     // Maybe to this in one func
 
     // TODO call status sender
-    public void notifyBuildStatus(String commitHash, boolean success) {
+    public void notifySuccess(String commitHash) {
     }
 
     // TODO call status sender
-    public void notifyTestResults(String commitHash, boolean success, String reportUrl) {
+    public void notifyFailure(String commitHash) {
     }
 
 }

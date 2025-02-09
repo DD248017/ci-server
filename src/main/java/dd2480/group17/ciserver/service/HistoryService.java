@@ -4,8 +4,13 @@ import java.util.List;
 
 public class HistoryService {
 
+    public void logBuild(String repoUrl, String branch, String commitHash, boolean compileSuccess,
+            boolean testSuccess) {
+
+    }
+
     // TODO store build results
-    public void storeBuildResult(String commitHash, boolean success, String logs) {
+    public void storeBuildResult(String commitHash, String logs) {
 
     }
 

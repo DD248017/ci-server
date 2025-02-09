@@ -6,6 +6,6 @@ public class CompileService {
 
     // TODO compile code
     public boolean compileCode(String repoPath) {
-        return false;
+        return true;
     }
 }

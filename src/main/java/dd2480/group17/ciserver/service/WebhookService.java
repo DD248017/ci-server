@@ -10,27 +10,56 @@ public class WebhookService {
     private static final NotificationService notificationService = new NotificationService();
     private static final HistoryService historyService = new HistoryService();
 
-    // TODO gets the payload in json and determind if this is a github event
-    // Extract important information
     public void processWebhookEvent(JsonNode jsonPayload) {
-        // Parse json
 
-        // handlePushEvent
+        // Test this if you want to clone a repo
+        /*
+         * boolean cloneSuccess =
+         * gitService.fetchRepository("https://github.com/DD248017/ci-server", "test",
+         * "./ci-server-test");
+         */
+
+        if (isGitHubPushEvent(jsonPayload)) {
+            handlePushEvent(jsonPayload);
+        } else {
+            System.out.println("Not a GitHub push event.");
+
+        }
 
     }
 
-    // TODO if it is a github event send neccessary information to githubservices
+    private boolean isGitHubPushEvent(JsonNode jsonPayload) {
+        JsonNode refNode = jsonPayload.path("ref");
+        return !refNode.isMissingNode() && refNode.asText().startsWith("refs/heads/");
+    }
 
+    // TODO fix right function parameters
     private void handlePushEvent(JsonNode jsonPayload) {
 
-        // gitService.fetchRepository("https://github.com/DD248017/ci-server", "test");
+        String repoUrl = jsonPayload.path("repository").path("clone_url").asText();
+        String branch = jsonPayload.path("ref").asText().replace("refs/heads/", "");
 
-        // Notify error
+        try {
+            boolean cloneSuccess = gitService.fetchRepository(repoUrl, branch, "./newRepo");
+            if (cloneSuccess) {
+                boolean compileSuccess = compileService.compileCode("somepath");
+                boolean testSuccess = testService.executeTests("somepath");
 
-        // compileService.CompileCode
-        // testService.TestCode
+                // Notify based on the result of compile and test
+                if (compileSuccess && testSuccess) {
+                    notificationService.notifySuccess("some hash");
+                } else {
+                    notificationService.notifyFailure("some hash");
+                }
 
-        // Notify result
-
+                // Log the build history
+                historyService.logBuild(repoUrl, branch, "some hash", compileSuccess, testSuccess);
+            } else {
+                // Notify failure to clone repository
+                notificationService.notifyFailure("Failed to clone repository.");
+            }
+        } catch (Exception e) {
+            notificationService.notifyFailure("An error occurred during processing: " + e.getMessage());
+        }
     }
 }

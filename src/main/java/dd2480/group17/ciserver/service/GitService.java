@@ -7,12 +7,12 @@ public class GitService {
     private static final GitHandler gitHandler = new GitHandler();
 
     // TODO call githubhandler to get the repository
-    public void fetchRepository(String repoUrl, String branch) {
+    public boolean fetchRepository(String repoUrl, String branch, String targetDir) {
 
-        boolean successful = gitHandler.cloneRepository(repoUrl, branch, "./newRepo");
+        boolean successful = gitHandler.cloneRepository(repoUrl, branch, targetDir);
         // gitHandler.pullLatestChanges()
         // gitHandler.checkoutCommit()
-
+        return successful;
     }
 
 }
