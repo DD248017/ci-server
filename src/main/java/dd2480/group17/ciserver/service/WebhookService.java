@@ -28,7 +28,7 @@ public class WebhookService {
             boolean cloneSuccess = gitService.fetchRepository(repoUrl, branch, path);
             if (cloneSuccess) {
                 boolean compileSuccess = compileService.compileCode(path, commitHash);
-                boolean testSuccess = testService.executeTests(path);
+                boolean testSuccess = testService.executeTests(path, commitHash);
 
                 // Notify based on the result of compile and test
                 if (compileSuccess && testSuccess) {
