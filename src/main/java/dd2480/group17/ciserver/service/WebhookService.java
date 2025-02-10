@@ -1,6 +1,6 @@
 package dd2480.group17.ciserver.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import dd2480.group17.ciserver.infrastructure.dto.WebhookDTO;
 
 public class WebhookService {
 
@@ -10,56 +10,43 @@ public class WebhookService {
     private static final NotificationService notificationService = new NotificationService();
     private static final HistoryService historyService = new HistoryService();
 
-    public void processWebhookEvent(JsonNode jsonPayload) {
-
-        // Test this if you want to clone a repo
-        /*
-         * boolean cloneSuccess =
-         * gitService.fetchRepository("https://github.com/DD248017/ci-server", "test",
-         * "./ci-server-test");
-         */
-
-        if (isGitHubPushEvent(jsonPayload)) {
-            handlePushEvent(jsonPayload);
-        } else {
-            System.out.println("Not a GitHub push event.");
-
-        }
-
+    // TODO javadocs
+    public void processWebhookEvent(WebhookDTO webhookDTO) {
+        // Error handling here or check if it is pushevent
+        handlePushEvent(webhookDTO);
     }
 
-    private boolean isGitHubPushEvent(JsonNode jsonPayload) {
-        JsonNode refNode = jsonPayload.path("ref");
-        return !refNode.isMissingNode() && refNode.asText().startsWith("refs/heads/");
-    }
+    // TODO get this work with other functions and javadocs
+    private void handlePushEvent(WebhookDTO webhookDTO) {
+        String repoUrl = webhookDTO.repository().htmlUrl();
+        String branch = webhookDTO.branch();
+        String commitHash = webhookDTO.after();
 
-    // TODO fix right function parameters
-    private void handlePushEvent(JsonNode jsonPayload) {
-
-        String repoUrl = jsonPayload.path("repository").path("clone_url").asText();
-        String branch = jsonPayload.path("ref").asText().replace("refs/heads/", "");
+        String path = "./builds/" + commitHash;
 
         try {
-            boolean cloneSuccess = gitService.fetchRepository(repoUrl, branch, "./newRepo");
+            boolean cloneSuccess = gitService.fetchRepository(repoUrl, branch, path);
             if (cloneSuccess) {
-                boolean compileSuccess = compileService.compileCode("somepath");
-                boolean testSuccess = testService.executeTests("somepath");
+                boolean compileSuccess = compileService.compileCode(path, commitHash);
+                boolean testSuccess = testService.executeTests(path, commitHash);
 
                 // Notify based on the result of compile and test
                 if (compileSuccess && testSuccess) {
-                    notificationService.notifySuccess("some hash");
+                    System.out.println("test and compile: SUCCESS");
+                    notificationService.notifySuccess(commitHash);
                 } else {
-                    notificationService.notifyFailure("some hash");
+                    System.out.println("test and compile: FAIL");
+                    notificationService.notifyFailure(commitHash);
                 }
 
-                // Log the build history
-                historyService.logBuild(repoUrl, branch, "some hash", compileSuccess, testSuccess);
             } else {
+                System.out.println("test and compile: something went wrong");
                 // Notify failure to clone repository
-                notificationService.notifyFailure("Failed to clone repository.");
+                // notificationService.notifyFailure("Failed to clone repository.");
             }
         } catch (Exception e) {
             notificationService.notifyFailure("An error occurred during processing: " + e.getMessage());
         }
     }
+
 }
