@@ -21,6 +21,10 @@ public class StatusSender {
 
     private final HttpClient httpClient;
 
+    /**
+     * Constructs a new {@code StatusSender} instance with an initialized HTTP
+     * client.
+     */
     public StatusSender() {
         this.httpClient = HttpClient.newHttpClient();
     }
