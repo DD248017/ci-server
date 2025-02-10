@@ -44,7 +44,22 @@ public class GitHandler {
     }
 
     // TODO checkout to the right commit hash
+    /**
+     * Checks out a specific commit in the given Git repository.
+     *
+     * @param repoPath   The local file system path to the Git repository.
+     * @param commitHash The unique hash identifier of the commit to checkout.
+     * @return true if checkout is successful, false otherwise.
+     */
     public void checkoutCommit(String repoPath, String commitHash) {
+        try {
+            Git git = Git.open(new File(repoPath));
 
+            git.checkout().setName(commitHash).call();
+
+            System.out.println("Checked out to commit: " + commitHash);
+        } catch (Exception e) {
+            System.out.println("Error during checkout : " + e.getMessage());
+        }
     }
 }
