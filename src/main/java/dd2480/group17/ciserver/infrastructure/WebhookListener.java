@@ -22,8 +22,25 @@ public class WebhookListener extends AbstractHandler {
             throws IOException {
 
         try {
-            WebhookDTO webhookDTO = parseWebhookPayload(request);
-            webhookService.processWebhookEvent(webhookDTO);
+            if ("POST".equalsIgnoreCase(request.getMethod())) {
+
+                WebhookDTO webhookDTO = parseWebhookPayload(request);
+                webhookService.processWebhookEvent(webhookDTO);
+            } else {
+                response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+                response.getWriter().write("Only POST method allowed");
+                return;
+            }
+
+            // Log the JSON body (you can process it further as needed)
+
+            // WebhookDTO webhookDTO = parseWebhookPayload(request);
+            // webhookService.processWebhookEvent(webhookDTO);
+
+            baseRequest.setHandled(true);
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.setContentType("text/html;charset=utf-8");
+            response.getWriter().println("CI job done!");
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.getWriter().write("Failed to process webhook: " + e.getMessage());
@@ -46,7 +63,6 @@ public class WebhookListener extends AbstractHandler {
                 requestBody.append(line);
             }
         }
-
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(requestBody.toString(), WebhookDTO.class);
     }

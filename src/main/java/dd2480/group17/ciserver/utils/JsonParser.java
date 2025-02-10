@@ -1,10 +1,11 @@
 package dd2480.group17.ciserver.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import dd2480.group17.ciserver.infrastructure.dto.WebhookDTO;
-
 import java.io.File;
 import java.io.IOException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import dd2480.group17.ciserver.infrastructure.dto.WebhookDTO;
 
 public class JsonParser {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();

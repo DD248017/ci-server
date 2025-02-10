@@ -32,14 +32,17 @@ public class WebhookService {
 
                 // Notify based on the result of compile and test
                 if (compileSuccess && testSuccess) {
+                    System.out.println("test and compile: SUCCESS");
                     notificationService.notifySuccess(commitHash);
                 } else {
+                    System.out.println("test and compile: FAIL");
                     notificationService.notifyFailure(commitHash);
                 }
 
             } else {
+                System.out.println("test and compile: something went wrong");
                 // Notify failure to clone repository
-                notificationService.notifyFailure("Failed to clone repository.");
+                // notificationService.notifyFailure("Failed to clone repository.");
             }
         } catch (Exception e) {
             notificationService.notifyFailure("An error occurred during processing: " + e.getMessage());
