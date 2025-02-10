@@ -42,7 +42,6 @@ public class MavenCompileRunner {
             errorWriter.write(e.getMessage());
         }
 
-        System.out.println(success);
         return new CompileDTO(success, outputWriter.toString(), errorWriter.toString());
     }
 }
