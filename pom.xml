@@ -106,6 +106,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Plugin to compile the project with the latest Java version -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -115,6 +116,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Plugin to translate Javadoc to HTML -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
