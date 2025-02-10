@@ -1,6 +1,7 @@
 package dd2480.group17.ciserver.utils;
 
 import java.io.File;
+import java.io.StringWriter;
 import java.util.Collections;
 
 import org.apache.maven.shared.invoker.DefaultInvocationRequest;
@@ -10,8 +11,10 @@ import org.apache.maven.shared.invoker.InvocationResult;
 import org.apache.maven.shared.invoker.Invoker;
 import org.apache.maven.shared.invoker.MavenInvocationException;
 
-public class MavenRunner {
-    public static boolean runMaven(String command, String path) {
+import dd2480.group17.ciserver.infrastructure.dto.CompileDTO;
+
+public class MavenCompileRunner {
+    public static CompileDTO runMavenCompile(String command, String path) {
         Invoker invoker = new DefaultInvoker();
 
         // Here you need to make an env variable that's called "MAVEN_HOME"
@@ -23,16 +26,23 @@ public class MavenRunner {
         request.setPomFile(new File("pom.xml"));
         request.setGoals(Collections.singletonList(command));
 
+        request.setBatchMode(true);
+
+        StringWriter outputWriter = new StringWriter();
+        StringWriter errorWriter = new StringWriter();
+
+        invoker.setOutputHandler(outputWriter::write);
+        invoker.setErrorHandler(errorWriter::write);
+
+        boolean success = false;
         try {
             InvocationResult result = invoker.execute(request);
-            if (result.getExitCode() == 0) {
-                return true;
-            } else {
-                return false;
-            }
+            success = (result.getExitCode() == 0);
         } catch (MavenInvocationException e) {
-            e.printStackTrace();
-            return false;
+            errorWriter.write(e.getMessage());
         }
+
+        System.out.println(success);
+        return new CompileDTO(success, outputWriter.toString(), errorWriter.toString());
     }
 }
