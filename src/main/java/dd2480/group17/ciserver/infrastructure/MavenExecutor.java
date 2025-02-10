@@ -1,14 +1,17 @@
 package dd2480.group17.ciserver.infrastructure;
 
-import dd2480.group17.ciserver.utils.MavenRunner;
+import dd2480.group17.ciserver.infrastructure.dto.CompileDTO;
+import dd2480.group17.ciserver.utils.MavenCompileRunner;
 
 public class MavenExecutor {
 
-    public boolean runCompile(String repoPath) {
-        return MavenRunner.runMaven("compile", repoPath);
+    public CompileDTO runCompile(String repoPath) {
+        return MavenCompileRunner.runMavenCompile("compile", repoPath);
     }
 
-    public boolean runTest(String repoPath) {
-        return MavenRunner.runMaven("test", repoPath);
-    }
+    /*
+     * public CompileDTO runTest(String repoPath) {
+     * return MavenCompileRunner.runMaven("test", repoPath);
+     * }
+     */
 }

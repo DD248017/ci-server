@@ -12,7 +12,6 @@ public class WebhookService {
 
     // TODO javadocs
     public void processWebhookEvent(WebhookDTO webhookDTO) {
-
         // Error handling here or check if it is pushevent
         handlePushEvent(webhookDTO);
     }
@@ -23,11 +22,13 @@ public class WebhookService {
         String branch = webhookDTO.branch();
         String commitHash = webhookDTO.after();
 
+        String path = "./newRepo";
+
         try {
-            boolean cloneSuccess = gitService.fetchRepository(repoUrl, branch, "./newRepo");
+            boolean cloneSuccess = gitService.fetchRepository(repoUrl, branch, path);
             if (cloneSuccess) {
-                boolean compileSuccess = compileService.compileCode("./newRepo");
-                boolean testSuccess = testService.executeTests("./newRepo");
+                boolean compileSuccess = compileService.compileCode(path, commitHash);
+                boolean testSuccess = testService.executeTests(path);
 
                 // Notify based on the result of compile and test
                 if (compileSuccess && testSuccess) {
@@ -36,8 +37,6 @@ public class WebhookService {
                     notificationService.notifyFailure(commitHash);
                 }
 
-                // Log the build history
-                historyService.logBuild(repoUrl, branch, commitHash, compileSuccess, testSuccess);
             } else {
                 // Notify failure to clone repository
                 notificationService.notifyFailure("Failed to clone repository.");

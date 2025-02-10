@@ -1,11 +1,17 @@
 package dd2480.group17.ciserver.service;
 
+import dd2480.group17.ciserver.infrastructure.MavenExecutor;
+import dd2480.group17.ciserver.infrastructure.dto.CompileDTO;
+import dd2480.group17.ciserver.utils.Logger;
+
 public class CompileService {
 
-    // Use mvn executre in infrastructure
+    private static final MavenExecutor mavenExecutor = new MavenExecutor();
+    private static final Logger logger = new Logger();
 
-    // TODO compile code
-    public boolean compileCode(String repoPath) {
-        return true;
+    public boolean compileCode(String repoPath, String commitId) {
+        CompileDTO result = mavenExecutor.runCompile(repoPath);
+        logger.logCompileEvent(commitId, result.getOutput(), result.getError());
+        return result.isSuccess();
     }
 }
