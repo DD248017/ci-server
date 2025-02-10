@@ -22,7 +22,7 @@ public class WebhookService {
         String branch = webhookDTO.branch();
         String commitHash = webhookDTO.after();
 
-        String path = "./newRepo";
+        String path = "./builds/" + commitHash;
 
         try {
             boolean cloneSuccess = gitService.fetchRepository(repoUrl, branch, path);
@@ -48,4 +48,5 @@ public class WebhookService {
             notificationService.notifyFailure("An error occurred during processing: " + e.getMessage());
         }
     }
+
 }
