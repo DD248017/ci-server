@@ -1,7 +1,9 @@
 package dd2480.group17.ciserver.infrastructure;
 
 import dd2480.group17.ciserver.infrastructure.dto.CompileDTO;
+import dd2480.group17.ciserver.infrastructure.dto.TestDTO;
 import dd2480.group17.ciserver.utils.MavenCompileRunner;
+import dd2480.group17.ciserver.utils.MavenTestRunner;
 
 public class MavenExecutor {
 
@@ -9,9 +11,8 @@ public class MavenExecutor {
         return MavenCompileRunner.runMavenCompile("compile", repoPath);
     }
 
-    /*
-     * public CompileDTO runTest(String repoPath) {
-     * return MavenCompileRunner.runMaven("test", repoPath);
-     * }
-     */
+    public TestDTO runTest(String repoPath) {
+        return MavenTestRunner.runMavenTest("test", repoPath);
+    }
+
 }
