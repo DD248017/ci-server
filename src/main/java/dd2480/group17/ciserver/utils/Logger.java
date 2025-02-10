@@ -9,8 +9,9 @@ import java.util.Date;
 
 /**
  * Logger utility for CI Server.
- * This class handles logging for webhook events, mvn compile, and mvn test logs.
- * Log format is now loaded from log4j.properties.
+ * This class handles logging for webhook events, mvn compile, and mvn test
+ * logs.
+ * Log format is loaded from log4j.properties.
  */
 public class Logger {
     /**
@@ -30,7 +31,7 @@ public class Logger {
     }
 
     /**
-     * Logs the output of `mvn compile` using format from log4j.properties.
+     * Logs the output of mvn compile using format from log4j.properties.
      *
      * @param commitId the commit hash
      * @param output   the output from the compilation process
@@ -46,7 +47,7 @@ public class Logger {
     }
 
     /**
-     * Logs the output of `mvn test` using format from log4j.properties.
+     * Logs the output of mvn test using format from log4j.properties.
      *
      * @param commitId the commit hash
      * @param output   the output from the test execution

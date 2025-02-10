@@ -6,22 +6,27 @@ import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.maven.shared.invoker.DefaultInvocationRequest;
-import org.apache.maven.shared.invoker.DefaultInvoker;
-import org.apache.maven.shared.invoker.InvocationRequest;
-import org.apache.maven.shared.invoker.InvocationResult;
-import org.apache.maven.shared.invoker.Invoker;
-import org.apache.maven.shared.invoker.MavenInvocationException;
+import org.apache.maven.shared.invoker.*;
 
 import dd2480.group17.ciserver.infrastructure.dto.TestDTO;
 
+/**
+ * Utility class for running Maven test commands and processing their results.
+ */
 public class MavenTestRunner {
+    /**
+     * Executes a Maven test command in the specified directory.
+     *
+     * @param command the Maven command to run (e.g., "test")
+     * @param path    the path to the directory containing the Maven project
+     * @return a {@link TestDTO} containing the success status, full output, and
+     *         failed tests
+     */
     public static TestDTO runMavenTest(String command, String path) {
         Invoker invoker = new DefaultInvoker();
 
-        // Here you need to make an env variable that's called "MAVEN_HOME"
+        // Set Maven home directory from environment variable "MAVEN_HOME"
         invoker.setMavenHome(new File(System.getenv("MAVEN_HOME")));
-
         invoker.setWorkingDirectory(new File(path));
 
         InvocationRequest request = new DefaultInvocationRequest();
@@ -48,6 +53,13 @@ public class MavenTestRunner {
         return new TestDTO(success, fullOutput, failedTests);
     }
 
+    /**
+     * Extracts the list of failed tests from Maven test output.
+     *
+     * @param output the full output of the Maven test command
+     * @return a string listing failed tests, or "No failed tests" if none were
+     *         found
+     */
     private static String extractFailedTests(String output) {
         StringBuilder failedTests = new StringBuilder();
         Pattern pattern = Pattern.compile("Failed tests:([\\s\\S]*?)\n\n", Pattern.MULTILINE);
