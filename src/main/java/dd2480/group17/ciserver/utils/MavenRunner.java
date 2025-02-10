@@ -10,28 +10,29 @@ import org.apache.maven.shared.invoker.InvocationResult;
 import org.apache.maven.shared.invoker.Invoker;
 import org.apache.maven.shared.invoker.MavenInvocationException;
 
-public class MavenTestRunner {
-    public static void runMavenTest() {
+public class MavenRunner {
+    public static boolean runMaven(String command, String path) {
         Invoker invoker = new DefaultInvoker();
 
-        // Here you need to make an env variable thats called "MAVEN_HOME"
+        // Here you need to make an env variable that's called "MAVEN_HOME"
         invoker.setMavenHome(new File(System.getenv("MAVEN_HOME")));
 
-        invoker.setWorkingDirectory(new File("."));
+        invoker.setWorkingDirectory(new File(path));
 
         InvocationRequest request = new DefaultInvocationRequest();
         request.setPomFile(new File("pom.xml"));
-        request.setGoals(Collections.singletonList("test"));
+        request.setGoals(Collections.singletonList(command));
 
         try {
             InvocationResult result = invoker.execute(request);
             if (result.getExitCode() == 0) {
-                System.out.println("Tests were successful!");
+                return true;
             } else {
-                System.out.println("Tests failed!");
+                return false;
             }
         } catch (MavenInvocationException e) {
             e.printStackTrace();
+            return false;
         }
     }
 }
