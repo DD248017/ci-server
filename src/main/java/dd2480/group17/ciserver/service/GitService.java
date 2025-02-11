@@ -2,6 +2,14 @@ package dd2480.group17.ciserver.service;
 
 import dd2480.group17.ciserver.infrastructure.GitHandler;
 
+/**
+ * The {@code GitService} class is responsible for handling Git operations,
+ * particularly for fetching a repository by cloning it from a given URL.
+ * <p>
+ * This class currently supports cloning a repository using the
+ * {@link GitHandler}.
+ * </p>
+ */
 public class GitService {
 
     private static final GitHandler gitHandler = new GitHandler();

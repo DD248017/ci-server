@@ -2,6 +2,18 @@ package dd2480.group17.ciserver.service;
 
 import dd2480.group17.ciserver.infrastructure.dto.WebhookDTO;
 
+/**
+ * The {@code WebhookService} class is responsible for processing incoming
+ * webhook events.
+ * <p>
+ * It is responsible for event handling to specific methods based on the event
+ * type.
+ * Currently, the class
+ * handles push events by cloning the repository, compiling the code, executing
+ * tests, and sending
+ * notifications based on the results via the NotificationService.
+ * </p>
+ */
 public class WebhookService {
 
     private static final GitService gitService = new GitService();
@@ -10,13 +22,39 @@ public class WebhookService {
     private static final NotificationService notificationService = new NotificationService();
     private static final HistoryService historyService = new HistoryService();
 
-    // TODO javadocs
+    /**
+     * Processes the incoming webhook event.
+     *
+     * @param webhookDTO the data transfer object containing the details of the
+     *                   webhook event
+     */
     public void processWebhookEvent(WebhookDTO webhookDTO) {
         // Error handling here or check if it is pushevent
         handlePushEvent(webhookDTO);
     }
 
-    // TODO get this work with other functions and javadocs
+    /**
+     * Handles push events triggered by the webhook.
+     * <p>
+     * This method performs the following steps:
+     * <ol>
+     * <li>Extracts the repository URL, branch, and commit hash from the webhook
+     * data.</li>
+     * <li>Constructs a build path using the commit hash.</li>
+     * <li>Attempts to clone the repository using {@link GitService}.</li>
+     * <li>If the clone is successful, compiles the code and executes tests via
+     * {@link CompileService} and {@link TestService}.</li>
+     * <li>Sends a success notification through {@link NotificationService} if both
+     * compilation
+     * and testing succeed; otherwise, sends a failure notification.</li>
+     * <li>If cloning fails or an exception occurs during processing, a failure
+     * notification is sent.</li>
+     * </ol>
+     * </p>
+     *
+     * @param webhookDTO the data transfer object containing the details of the push
+     *                   event
+     */
     private void handlePushEvent(WebhookDTO webhookDTO) {
         String repoUrl = webhookDTO.repository().htmlUrl();
         String branch = webhookDTO.branch();

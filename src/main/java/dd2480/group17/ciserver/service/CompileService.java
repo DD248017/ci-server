@@ -4,6 +4,18 @@ import dd2480.group17.ciserver.infrastructure.MavenExecutor;
 import dd2480.group17.ciserver.infrastructure.dto.CompileDTO;
 import dd2480.group17.ciserver.utils.Logger;
 
+/**
+ * The {@code CompileService} class is responsible for compiling the code in a
+ * specified repository path
+ * using Maven and logging the compilation results.
+ * <p>
+ * This class represents the compilation process to {@link MavenExecutor} and
+ * logs the output and errors using
+ * {@link Logger}. It plays a critical role in the Continuous Integration (CI)
+ * pipeline by determining whether
+ * a build is successful or not.
+ * </p>
+ */
 public class CompileService {
 
     private static final MavenExecutor mavenExecutor = new MavenExecutor();
