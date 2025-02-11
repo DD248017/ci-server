@@ -3,6 +3,7 @@ package dd2480.group17.ciserver.domain;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 
 import dd2480.group17.ciserver.infrastructure.HealthHandler;
 import dd2480.group17.ciserver.infrastructure.HistoryHandler;
@@ -34,11 +35,21 @@ public class Build {
 
         ContextHandler rootContext = new ContextHandler("/");
         rootContext.setHandler(new RootHandler());
+
+        ResourceHandler resourceHandler = new ResourceHandler();
+        resourceHandler.setDirectoriesListed(true);
+        resourceHandler.setWelcomeFiles(new String[] { "index.html" });
+        resourceHandler.setResourceBase("./target/site/apidocs");
+
+        ContextHandler docsContext = new ContextHandler("/docs");
+        docsContext.setHandler(resourceHandler);
+
         ContextHandlerCollection contexts = new ContextHandlerCollection();
         contexts.addHandler(webhookContext);
         contexts.addHandler(healthCheckContext);
         contexts.addHandler(historyContext);
         contexts.addHandler(rootContext);
+        contexts.addHandler(docsContext);
 
         server.setHandler(contexts);
         server.start();
