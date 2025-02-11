@@ -5,11 +5,19 @@ import java.io.File;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
+/**
+ * The {@code GitHandler} class provides utility methods for performing Git
+ * operations,
+ * such as cloning a repository, pulling the latest changes, and checking out a
+ * specific commit.
+ * <p>
+ * Currently, only the repository cloning functionality is implemented. Future
+ * enhancements
+ * will include pulling the latest changes and checking out to a specific commit
+ * hash.
+ * </p>
+ */
 public class GitHandler {
-
-    // TODO clone a repository and then send instructions to githubservice what to
-    // do with data
-    // TODO we need to add credentials
 
     /**
      * Clones a specific GitHub repository from a given branch.
@@ -36,15 +44,5 @@ public class GitHandler {
             System.err.println("Error cloning repository: " + e.getMessage());
             return false;
         }
-    }
-
-    // TODO pull latest changes
-    public void pullLatestChanges(String repoPath) {
-
-    }
-
-    // TODO checkout to the right commit hash
-    public void checkoutCommit(String repoPath, String commitHash) {
-
     }
 }
