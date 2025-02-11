@@ -1,6 +1,7 @@
 package dd2480.group17.ciserver.utils;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collections;
 
@@ -41,9 +42,11 @@ public class MavenCompileRunner {
 
         // Capture output and error streams
         StringWriter outputWriter = new StringWriter();
+        PrintWriter outputPrintWriter = new PrintWriter(outputWriter, true);
         StringWriter errorWriter = new StringWriter();
-        invoker.setOutputHandler(outputWriter::write);
-        invoker.setErrorHandler(errorWriter::write);
+        PrintWriter errorPrintWriter = new PrintWriter(errorWriter, true);
+        invoker.setOutputHandler(outputPrintWriter::println);
+        invoker.setErrorHandler(errorPrintWriter::println);
 
         boolean success = false;
         try {

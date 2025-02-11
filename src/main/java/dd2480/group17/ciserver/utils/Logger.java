@@ -62,6 +62,31 @@ public class Logger {
         return saveLogToFile("test", commitId, logContent);
     }
 
+    /**
+     * Saves JSON data to a file.
+     *
+     * @param logType  type of log (webhook, compile, test)
+     * @param commitId commit hash
+     * @param jsonData JSON data to save
+     * @return the path to the saved log file
+     */
+    public String saveJsonToFile(String logType, String commitId, String jsonData) {
+        String logsBasePath = "src/main/resources/dd2480/group17/ciserver/logs/";
+        String filename = generateJsonFilename(logType, commitId);
+        String filepath = logsBasePath + logType + "/" + filename;
+
+        try {
+            Files.createDirectories(Paths.get(logsBasePath + logType + "/"));
+            try (FileWriter writer = new FileWriter(filepath, true)) {
+                writer.write(jsonData);
+            }
+        } catch (IOException e) {
+            System.err.println("Failed to write " + logType + " log: " + e.getMessage());
+        }
+
+        return filepath;
+    }
+
     private static final ConfigLoader CONFIG_LOADER = new ConfigLoader();
 
     /**
@@ -106,6 +131,10 @@ public class Logger {
      * @return formatted filename
      */
     private String generateLogFilename(String type, String commitId) {
-        return String.format("%s_%s-%s.log", getTimestamp(), type, commitId);
+        return String.format("%s_%s-%s.log", getTimestamp(), type, commitId.substring(0, 8));
+    }
+
+    private String generateJsonFilename(String type, String commitId) {
+        return String.format("%s_%s-%s.json", getTimestamp(), type, commitId.substring(0, 8));
     }
 }

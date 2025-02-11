@@ -20,7 +20,6 @@ import dd2480.group17.ciserver.utils.LogParser;
  * </p>
  */
 public class HistoryService {
-
     /**
      * Processes all log files within the specified directory path and returns a
      * list of log entries
@@ -30,7 +29,7 @@ public class HistoryService {
      * @return a list of objects representing the parsed log entries,
      *         return true empty list if no log files are found
      */
-    public static List<LogDTO> processAllLogsInDirectory(String directoryPath) {
+    public List<LogDTO> processAllLogsInDirectory(String directoryPath) {
         File dir = new File(directoryPath);
         File[] files = dir.listFiles((d, name) -> name.endsWith(".log"));
         List<LogDTO> logEntries = new ArrayList<>();

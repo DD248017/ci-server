@@ -31,7 +31,7 @@ public class LogParser {
                     commitId = line.substring(11).trim();
                 } else {
                     line = line.trim();
-                    content += line;
+                    content += line + "<br>";
                 }
             }
         } catch (IOException e) {

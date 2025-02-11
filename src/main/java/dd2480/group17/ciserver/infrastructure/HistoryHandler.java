@@ -19,12 +19,14 @@ import dd2480.group17.ciserver.service.HistoryService;
  */
 public class HistoryHandler extends AbstractHandler {
 
-    /** Service responsible for processing log files. */
+    /**
+     * Service responsible for processing log files.
+     */
     private static final HistoryService historyService = new HistoryService();
 
     /**
      * Handles incoming HTTP requests to retrieve and display log histories.
-     * 
+     *
      * @param target      the target of the request, which is the request URI
      * @param baseRequest the Jetty request object
      * @param request     the HttpServletRequest object
@@ -36,9 +38,11 @@ public class HistoryHandler extends AbstractHandler {
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
+        String webhookLogPath = "./src/main/resources/dd2480/group17/ciserver/logs/webhook";
         String compileLogPath = "./src/main/resources/dd2480/group17/ciserver/logs/compile";
         String testLogPath = "./src/main/resources/dd2480/group17/ciserver/logs/test";
 
+        List<LogDTO> WebhooklogEntries = historyService.processAllLogsInDirectory(webhookLogPath);
         List<LogDTO> CompilelogEntries = historyService.processAllLogsInDirectory(compileLogPath);
         List<LogDTO> TestlogEntries = historyService.processAllLogsInDirectory(testLogPath);
 
@@ -46,14 +50,35 @@ public class HistoryHandler extends AbstractHandler {
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
 
-        String pageContent = displayCompileLogs(CompilelogEntries) + displayTestLogs(TestlogEntries);
+        String pageContent = displayWebhookLogs(WebhooklogEntries) + displayCompileLogs(CompilelogEntries) + displayTestLogs(TestlogEntries);
 
         response.getWriter().println(pageContent);
     }
 
     /**
+     * Generates an HTML table displaying webhook log entries.
+     *
+     * @param logEntries a list of test log entries
+     * @return an HTML string representing the test log history
+     */
+    private String displayWebhookLogs(List<LogDTO> logEntries) {
+        String html = "<h1>Webhook log history</h1>";
+        html += "<table border='1'><tr><th>Commit Id</th><th>Filename</th><th>Content</th></tr>";
+
+        for (LogDTO entry : logEntries) {
+            html += ("<tr>" + "<td>" + entry.getCommitId() + "</td>"
+                    + "<td>" + entry.getFilename() + "</td>"
+                    + "<td>" + entry.getErrorOutput() + "</td>"
+                    + "</tr>");
+        }
+
+        html += "</table>";
+        return html;
+    }
+
+    /**
      * Generates an HTML table displaying compile log entries.
-     * 
+     *
      * @param logEntries a list of compile log entries
      * @return an HTML string representing the compile log history
      */
@@ -74,7 +99,7 @@ public class HistoryHandler extends AbstractHandler {
 
     /**
      * Generates an HTML table displaying test log entries.
-     * 
+     *
      * @param logEntries a list of test log entries
      * @return an HTML string representing the test log history
      */
