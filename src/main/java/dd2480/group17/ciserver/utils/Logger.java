@@ -131,10 +131,10 @@ public class Logger {
      * @return formatted filename
      */
     private String generateLogFilename(String type, String commitId) {
-        return String.format("%s_%s-%s.log", getTimestamp(), type, commitId);
+        return String.format("%s_%s-%s.log", getTimestamp(), type, commitId.substring(0, 8));
     }
 
     private String generateJsonFilename(String type, String commitId) {
-        return String.format("%s_%s-%s.json", getTimestamp(), type, commitId);
+        return String.format("%s_%s-%s.json", getTimestamp(), type, commitId.substring(0, 8));
     }
 }

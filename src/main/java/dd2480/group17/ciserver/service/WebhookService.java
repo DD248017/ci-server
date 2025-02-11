@@ -17,8 +17,7 @@ public class WebhookService {
         // Error handling here or check if it is pushevent
         String commitId = webhookDTO.headCommit().id();
         String jsonData = webhookDTO.toString();
-        String logMessage = "Received webhook event for commit: " + commitId + "\n" + jsonData;
-        System.out.println(logMessage);
+        String logMessage = "Received webhook event from: " + commitId + "\n";
         logger.logWebhookEvent(commitId, jsonData, logMessage);
 
         handlePushEvent(webhookDTO);

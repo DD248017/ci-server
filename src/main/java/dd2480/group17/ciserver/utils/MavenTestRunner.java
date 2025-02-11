@@ -1,6 +1,7 @@
 package dd2480.group17.ciserver.utils;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collections;
 import java.util.regex.Matcher;
@@ -35,10 +36,12 @@ public class MavenTestRunner {
         request.setBatchMode(true);
 
         StringWriter outputWriter = new StringWriter();
+        PrintWriter outputPrintWriter = new PrintWriter(outputWriter, true);
         StringWriter errorWriter = new StringWriter();
+        PrintWriter errorPrintWriter = new PrintWriter(errorWriter, true);
 
-        invoker.setOutputHandler(outputWriter::write);
-        invoker.setErrorHandler(errorWriter::write);
+        invoker.setOutputHandler(outputPrintWriter::println);
+        invoker.setErrorHandler(errorPrintWriter::println);
 
         boolean success = false;
         try {
