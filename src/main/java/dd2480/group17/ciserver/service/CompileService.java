@@ -9,6 +9,14 @@ public class CompileService {
     private static final MavenExecutor mavenExecutor = new MavenExecutor();
     private static final Logger logger = new Logger();
 
+    /**
+     * Compiles the code in the specified repository path and logs the result
+     * 
+     * @param repoPath the file system path to the repository that needs to be
+     *                 compiled
+     * @param commitId the commit hash used for identifying the build in the logs
+     * @return true if the compilation is successful, false otherwise
+     */
     public boolean compileCode(String repoPath, String commitId) {
         CompileDTO result = mavenExecutor.runCompile(repoPath);
         logger.logCompileEvent(commitId, result.getOutput(), result.getError());
