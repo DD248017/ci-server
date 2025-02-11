@@ -1,5 +1,6 @@
 ## Project ##
 /builds/
+src/main/resources/dd2480/group17/ciserver/logs/
 
 # Compiled class file
 *.class
