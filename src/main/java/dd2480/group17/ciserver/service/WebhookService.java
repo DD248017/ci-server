@@ -45,7 +45,8 @@ public class WebhookService {
                 // notificationService.notifyFailure("Failed to clone repository.");
             }
         } catch (Exception e) {
-            notificationService.notifyFailure("An error occurred during processing: " + e.getMessage());
+            System.out.println("An error occurred during processing: " + e.getMessage());
+            notificationService.notifyFailure(commitHash);
         }
     }
 
