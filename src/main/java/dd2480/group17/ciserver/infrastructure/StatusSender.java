@@ -7,15 +7,18 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
 /**
- * The {@code StatusSender} class is responsible for sending the status of a commit 
- * to GitHub's commit status API. It indicates whether a build has succeeded or failed.
+ * The {@code StatusSender} class is responsible for sending the status of a
+ * commit
+ * to GitHub's commit status API. It indicates whether a build has succeeded or
+ * failed.
  * <p>
- * It sends a POST request to GitHub's commit status API with a success or failure message
+ * It sends a POST request to GitHub's commit status API with a success or
+ * failure message
  * based on the build outcome.
  * </p>
  */
 public class StatusSender {
-    
+
     /**
      * The URL for GitHub's commit status API endpoint.
      */
@@ -39,14 +42,17 @@ public class StatusSender {
     }
 
     /**
-     * Sends the status of a commit to GitHub, indicating whether the build passed or failed.
+     * Sends the status of a commit to GitHub, indicating whether the build passed
+     * or failed.
      * <p>
-     * A POST request is sent to GitHub's commit status API with the provided commit hash 
+     * A POST request is sent to GitHub's commit status API with the provided commit
+     * hash
      * and the build result (success or failure).
      * </p>
      * 
      * @param commitHash The SHA hash of the commit to update the status for.
-     * @param isSuccess {@code true} if the build succeeded, {@code false} if the build failed.
+     * @param isSuccess  {@code true} if the build succeeded, {@code false} if the
+     *                   build failed.
      */
     public void sendStatus(String commitHash, boolean isSuccess) {
         String buildState = isSuccess ? "success" : "failure";
@@ -62,7 +68,7 @@ public class StatusSender {
         try {
             // Create the URI for the commit status API
             URI statusUrl = URI.create(GITHUB_API_URL + commitHash);
-            
+
             // Build the POST request
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(statusUrl)
@@ -81,4 +87,3 @@ public class StatusSender {
         }
     }
 }
-
