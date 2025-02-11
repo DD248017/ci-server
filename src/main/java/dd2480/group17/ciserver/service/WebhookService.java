@@ -1,6 +1,7 @@
 package dd2480.group17.ciserver.service;
 
 import dd2480.group17.ciserver.infrastructure.dto.WebhookDTO;
+import dd2480.group17.ciserver.utils.Logger;
 
 public class WebhookService {
 
@@ -9,10 +10,17 @@ public class WebhookService {
     private static final TestService testService = new TestService();
     private static final NotificationService notificationService = new NotificationService();
     private static final HistoryService historyService = new HistoryService();
+    private static final Logger logger = new Logger();
 
     // TODO javadocs
     public void processWebhookEvent(WebhookDTO webhookDTO) {
         // Error handling here or check if it is pushevent
+        String commitId = webhookDTO.headCommit().id();
+        String jsonData = webhookDTO.toString();
+        String logMessage = "Received webhook event for commit: " + commitId + "\n" + jsonData;
+        System.out.println(logMessage);
+        logger.logWebhookEvent(commitId, jsonData, logMessage);
+
         handlePushEvent(webhookDTO);
     }
 

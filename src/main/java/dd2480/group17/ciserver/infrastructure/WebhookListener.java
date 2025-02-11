@@ -1,11 +1,14 @@
 package dd2480.group17.ciserver.infrastructure;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dd2480.group17.ciserver.utils.Logger;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
@@ -29,6 +32,9 @@ public class WebhookListener extends AbstractHandler {
      */
     private static final WebhookService webhookService = new WebhookService();
 
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final Logger logger = new Logger();
+
     /**
      * Handles the incoming HTTP requests. Only POST requests are accepted, and the
      * payload is processed as a {@link WebhookDTO}.
@@ -38,7 +44,7 @@ public class WebhookListener extends AbstractHandler {
      * If there is any error during the webhook processing, a
      * {@code 400 Bad Request} status is returned.
      * </p>
-     * 
+     *
      * @param target      The target URL of the request.
      * @param baseRequest The base Jetty request object.
      * @param request     The HTTP request object.
@@ -54,7 +60,11 @@ public class WebhookListener extends AbstractHandler {
             if ("POST".equalsIgnoreCase(request.getMethod())) {
 
                 // Parse the webhook payload
-                WebhookDTO webhookDTO = parseWebhookPayload(request);
+                String payload = parseWebhookPayload(request);
+                WebhookDTO webhookDTO = objectMapper.readValue(payload, WebhookDTO.class);
+
+                // Write the payload to a file
+                logger.saveJsonToFile("webhook", webhookDTO.headCommit().id(), payload);
 
                 // Process the webhook event
                 webhookService.processWebhookEvent(webhookDTO);
@@ -85,13 +95,13 @@ public class WebhookListener extends AbstractHandler {
      * using Jackson's
      * {@link ObjectMapper}.
      * </p>
-     * 
+     *
      * @param request The HTTP request containing the webhook payload.
      * @return A {@link WebhookDTO} representation of the payload.
      * @throws IOException If an error occurs while reading the request or parsing
      *                     the JSON.
      */
-    private WebhookDTO parseWebhookPayload(HttpServletRequest request) throws IOException {
+    private String parseWebhookPayload(HttpServletRequest request) throws IOException {
         StringBuilder requestBody = new StringBuilder();
         try (BufferedReader reader = request.getReader()) {
             String line;
@@ -99,7 +109,6 @@ public class WebhookListener extends AbstractHandler {
                 requestBody.append(line);
             }
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(requestBody.toString(), WebhookDTO.class);
+        return requestBody.toString();
     }
 }
