@@ -10,8 +10,7 @@ public class GitService {
     public boolean fetchRepository(String repoUrl, String branch, String targetDir) {
 
         boolean successful = gitHandler.cloneRepository(repoUrl, branch, targetDir);
-        // gitHandler.pullLatestChanges()
-        // gitHandler.checkoutCommit()
+
         return successful;
     }
 
