@@ -14,8 +14,9 @@ public class NotificationService {
      *
      * @param commitHash The SHA hash of the commit to update the status for.
      */
-    public void notifySuccess(String commitHash) {
-        statusSender.sendStatus(commitHash, true);
+    public int notifySuccess(String commitHash) {
+        int statusCode = statusSender.sendStatus(commitHash, true);
+        return statusCode;
     }
 
     /**
@@ -23,7 +24,8 @@ public class NotificationService {
      *
      * @param commitHash The SHA hash of the commit to update the status for.
      */
-    public void notifyFailure(String commitHash) {
-        statusSender.sendStatus(commitHash, false);
+    public int notifyFailure(String commitHash) {
+        int statusCode = statusSender.sendStatus(commitHash, false);
+        return statusCode;
     }
 }

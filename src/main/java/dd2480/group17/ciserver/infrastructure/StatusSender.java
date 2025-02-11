@@ -37,7 +37,7 @@ public class StatusSender {
      * @param isSuccess  {@code true} if the build succeeded, {@code false} if it
      *                   failed.
      */
-    public void sendStatus(String commitHash, boolean isSuccess) {
+    public int sendStatus(String commitHash, boolean isSuccess) {
         String buildState = isSuccess ? "success" : "failure";
         String description = isSuccess ? "Build passed" : "Build failed";
 
@@ -59,9 +59,10 @@ public class StatusSender {
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("GitHub API Response: " + response.statusCode());
-            System.out.println("Response Body: " + response.body());
+            return response.statusCode();
         } catch (Exception e) {
             e.printStackTrace();
+            return -1;
         }
 
     }
