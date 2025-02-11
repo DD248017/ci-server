@@ -9,7 +9,7 @@ import dd2480.group17.ciserver.utils.LogParser;
 
 public class HistoryService {
 
-    public static List<LogDTO> processAllLogsInDirectory(String directoryPath) {
+    public List<LogDTO> processAllLogsInDirectory(String directoryPath) {
         File dir = new File(directoryPath);
         File[] files = dir.listFiles((d, name) -> name.endsWith(".log"));
         List<LogDTO> logEntries = new ArrayList<>();
