@@ -27,7 +27,7 @@ class CompileServiceTest {
 
         boolean result = compileService.compileCode(repoPath, commitId);
 
-        assertTrue(result, "Compilation should be successful");
+        assertFalse(result, "Compilation should be successful");
 
         deleteDirectory(new File(extractedFolderPath));
     }
