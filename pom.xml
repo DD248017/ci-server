@@ -67,7 +67,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>dd2480.group17.ciserver.application.CIServerApplication.CiServer</mainClass>
+                            <mainClass>dd2480.group17.ciserver.application.CIServerApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -102,15 +102,6 @@
                 </executions>
                 <configuration>
                     <mainClass>dd2480.group17.ciserver.application.CIServerApplication</mainClass>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <release>${java.version}</release>
                 </configuration>
             </plugin>
 
