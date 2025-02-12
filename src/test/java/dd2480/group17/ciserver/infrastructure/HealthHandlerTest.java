@@ -11,8 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dd2480.group17.ciserver.infrastructure.HealthHandler;
-
 /**
  * The HealthHandlerTest class contains unit tests for the
  * HealthHandler class.
@@ -33,7 +31,7 @@ public class HealthHandlerTest {
     /**
      * The port number on which the test server is started.
      */
-    private static final int PORT = 8017;
+    private static final int PORT = 8087;
 
     /**
      * Sets up the test environment before any test methods are executed.
