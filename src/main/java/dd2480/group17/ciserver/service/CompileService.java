@@ -18,8 +18,20 @@ import dd2480.group17.ciserver.utils.Logger;
  */
 public class CompileService {
 
-    private static final MavenExecutor mavenExecutor = new MavenExecutor();
-    private static final Logger logger = new Logger();
+    private final MavenExecutor mavenExecutor;
+    private final Logger logger;
+
+    // Default constructor (used in production)
+    public CompileService() {
+        this.mavenExecutor = new MavenExecutor();
+        this.logger = new Logger();
+    }
+
+    // Constructor for unit testing (allows passing mock objects)
+    public CompileService(MavenExecutor mavenExecutor, Logger logger) {
+        this.mavenExecutor = mavenExecutor;
+        this.logger = logger;
+    }
 
     /**
      * Compiles the code in the specified repository path and logs the result
