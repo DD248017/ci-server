@@ -1,18 +1,14 @@
 package dd2480.group17.ciserver.infrastructure;
 
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.ContextHandler;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.junit.jupiter.api.AfterAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * The RootHandlerTest class contains unit tests for the RootHandler class.
@@ -35,7 +31,7 @@ public class RootHandlerTest {
     /**
      * The port number on which the test server is started.
      */
-    private static final int PORT = 8017;
+    private static final int PORT = 8087;
 
     /**
      * Sets up the Jetty server before all tests are run.

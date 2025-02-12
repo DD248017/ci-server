@@ -7,10 +7,9 @@ import java.net.URL;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * The HistoryHandlerTest class contains unit tests for the
@@ -29,7 +28,7 @@ public class HistoryHandlerTest {
     /**
      * The port number on which the test server is started.
      */
-    private static final int PORT = 8017;
+    private static final int PORT = 8087;
 
     /**
      * Sets up the Jetty server before all tests are run.
