@@ -4,33 +4,41 @@ This project involves developing a lightweight Continuous Integration (CI) serve
 
 ## 🛠️ Core Components:
 
-- **Compilation**: 
+- **Compilation**:
+
   - The CI server must support compiling the project when triggered by a webhook.
   - It should fetch the latest code from the specified branch and run mvn compile.
   - If using an interpreted language, it should perform a static syntax check.
 
-- **Automated Testing**: 
+- **Automated Testing**:
+
   - The CI server must run mvn test upon receiving a webhook event.
-  - The webhook payload should specify the branch where the change was made. 
+  - The webhook payload should specify the branch where the change was made.
   - The CI server should detect changes and execute the appropriate tests.
 
-- **CI Result Notification**: 
+- **CI Result Notification**:
+
   - The CI server must notify users about build results through at least one of the following:
     1. Commit status update (via GitHub REST API).
     2. Email notification to project members.
 
 - **Version Control and Traceability**:
+
   - Each CI run must be associated with a specific Git commit.
   - The commit history must follow best practices。
   - The CI server should maintain a history of past builds, with each build having a unique URL for logs.
 
 - **Documentation**:
+
   - All public classes and methods must have API documentation (e.g., JavaDoc).
   - A comprehensive README must be included, documenting：
     - How to set up and run the CI server
     - Dependencies and required configurations
     - Contributions of team members
     - How the CI server is implemented and tested
+
+- **Webhook Configuration**:
+  - Configure your Git platform (e.g., GitHub) to trigger the CI server by setting the webhook URL to point to your CI server's public URL form ngrok.
 
 ## 📂 Project Structure:
 
@@ -103,6 +111,16 @@ To run a specific test class, for example LIC0 use:
 mvn test -Dtest=JsonParserTest
 ```
 
+## Test Builds Folder
+
+Before running tests that depend on build logs, you must unzip the `/testBuilds` folder. This folder contains the necessary log files required for testing.
+
+For example, if your project contains a zipped file named `testBuilds.zip` in the project root, you can unzip it using the following command:
+
+````console
+unzip testBuilds.zip -d testBuilds
+
+
 ## 🤝 Statement of contributions
 
 Everyone has been active in this group project, and the collaboration has been excellent. From the beginning, we discussed each other's skills and divided the work accordingly, ensuring that everyone could contribute in ways that played to their strengths.
@@ -118,9 +136,48 @@ Everyone has been active in this group project, and the collaboration has been e
 ### Specific contributions to the project:
 
 ```console
-// todo: Add specific contributions here
-- "Way of working" docs                # (XXX)
-- README                               # (Lin & Max)
+## 🤝 Statement of Contributions
+
+Everyone has been active in this group project, and the collaboration has been excellent. From the beginning, we discussed each other's skills and divided the work accordingly, ensuring that everyone could contribute in ways that played to their strengths.
+
+### Contributors and Their Contributions:
+
+Before running tests that depend on build logs, unzip the /testBuilds folder. This folder contains the necessary log files required for testing.
+
+### Contributors and Their Contributions:
+
+- **Kohei Kuramoto**:
+  - Implemented unit tests for GitService.
+  - Implemented unit tests for Handlers.
+  - Added comprehensive Javadoc to /services functions and classes.
+
+- **Max Linghag Ahlgren**:
+  - Updated the README
+  - Added a new handler in the build process to support additional CI functionality.
+  - Fixed build issues by adding the /builds folder.
+
+- **Simon Li (ssimli)**:
+  - Developed and merged tests for the notification service.
+  - Contributed to overall testing improvements.
+
+- **Yuhang Lin**:
+  - Updated the webhook log files to ensure accurate logging of webhook events.
+
+- **Giacomo Ricco**:
+  - Coordinated the team and contributed to project documentation and overall design.
+
+### Additional Documentation:
+- "Way of working" docs – Giacomo Ricco
+
+````
+
+## 📜 Javadoc & API Documentation
+
+Comprehensive Javadoc comments are provided in the source code.
+To generate the API documentation in HTML format, run:
+
+```console
+mvn javadoc:javadoc
 ```
 
 ## 📜 License
