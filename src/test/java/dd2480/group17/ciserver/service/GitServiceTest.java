@@ -1,14 +1,15 @@
 package dd2480.group17.ciserver.service;
 
-import dd2480.group17.ciserver.service.GitService;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * The {@code GitServiceTest} class contains unit tests for the
@@ -31,7 +32,7 @@ import java.nio.file.Files;
 public class GitServiceTest {
 
     private GitService gitServiceUnderTest;
-    private File localRepoDir;
+    private final String url = "https://github.com/DD248017/ci-server";
     private File tempCloneDestination;
 
     /**
@@ -52,20 +53,7 @@ public class GitServiceTest {
     @BeforeEach
     public void initializeTestEnvironment() throws GitAPIException, IOException {
         gitServiceUnderTest = new GitService();
-
-        // Initialize a local repository in a temporary directory
-        localRepoDir = Files.createTempDirectory("localRepo").toFile();
-        Git.init().setDirectory(localRepoDir).call();
-
-        File testFile = new File(localRepoDir, "test.txt");
-        Files.write(testFile.toPath(), "test content".getBytes());
-        try (Git git = Git.open(localRepoDir)) {
-            git.add().addFilepattern("test.txt").call();
-            git.commit().setMessage("Initial commit").call();
-        }
-
-        // Create a temporary directory for the clone target
-        tempCloneDestination = Files.createTempDirectory("cloneTarget").toFile();
+        tempCloneDestination = Files.createTempDirectory("tempCloneDestination").toFile();
     }
 
     /**
@@ -77,8 +65,7 @@ public class GitServiceTest {
      */
     @AfterEach
     public void cleanTestEnvironment() {
-        // Delete the temporary directories created during the tests
-        deleteDirectory(localRepoDir);
+
         deleteDirectory(tempCloneDestination);
     }
 
@@ -96,12 +83,10 @@ public class GitServiceTest {
      */
     @Test
     public void shouldCloneRepositorySuccessfully() {
-        // Get the URI of the local repository (file:// URI)
-        String repoUrl = localRepoDir.toURI().toString();
-        String branch = "main"; // Default branch for Git.init() (or "main" in older versions)
 
-        // Attempt to clone the repository into the target directory
-        boolean result = gitServiceUnderTest.fetchRepository(repoUrl, branch, tempCloneDestination.getAbsolutePath());
+        String branch = "main";
+
+        boolean result = gitServiceUnderTest.fetchRepository(url, branch, tempCloneDestination.getAbsolutePath());
         assertTrue(result, "Expected the repository to be cloned successfully, but the cloning process failed.");
 
         // Verify that the .git directory exists in the clone target directory
@@ -120,11 +105,9 @@ public class GitServiceTest {
      */
     @Test
     public void shouldFailToCloneInvalidRepository() {
-        // Specify an invalid repository URL
         String repoUrl = "invalid_repo_url";
-        String branch = "master";
+        String branch = "main";
 
-        // Attempt to clone the repository with an invalid URL, which should fail
         boolean result = gitServiceUnderTest.fetchRepository(repoUrl, branch, tempCloneDestination.getAbsolutePath());
         assertFalse(result, "Cloning should fail because the provided repository URL is invalid.");
     }
