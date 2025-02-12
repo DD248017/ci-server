@@ -48,14 +48,6 @@
             <version>2.15.3</version> <!-- Use the latest version -->
         </dependency>
 
-        <!-- JUnit Jupiter API for testing -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.8.2</version>
-            <scope>test</scope>
-        </dependency>
-
         <!-- JUnit 5 API for Writing Tests -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -153,16 +145,6 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <release>${java.version}</release>
-                </configuration>
-            </plugin>
-
-            <!-- Plugin to compile the project with the latest Java version -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
