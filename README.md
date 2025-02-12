@@ -1,70 +1,40 @@
 # 🚀 DD2480 Assignment 2 Overview
 
-This project involves developing a lightweight Continuous Integration (CI) server that automatically compiles, tests, and reports build results for a given repository. The CI server listens for webhook triggers from a Git platform like GitHub, pulls the latest code changes, and runs `mvn compile` and `mvn test` to ensure code integrity. It then notifies users of the build results through commit status updates or email notifications. The project also requires proper repository structuring, clear documentation, and adherence to software engineering best practices, including well-structured commits and collaboration. Additionally, advanced features like build history tracking and enhanced automation can be implemented for distinction.
+This project involves developing a lightweight Continuous Integration (CI) server that automatically compiles, tests, and reports build results for a given repository. The CI server listens for webhook triggers from GitHub, pulls the latest code changes, and runs `mvn compile` and `mvn test` to ensure code integrity. It then notifies users of the build results through commit status updates or email notifications. The project also requires proper repository structuring, clear documentation, and adherence to software engineering best practices, including well-structured commits and collaboration. Additionally, advanced features like build history tracking and enhanced automation can be implemented for distinction.
 
 ## 🛠️ Core Components:
 
 - **Compilation**:
 
-  - The CI server must support compiling the project when triggered by a webhook.
-  - It should fetch the latest code from the specified branch and run mvn compile.
-  - If using an interpreted language, it should perform a static syntax check.
+  - The CI server support compiling the project when triggered by a webhook.
+  - It fetch the latest code from the specified branch and run mvn compile.
 
 - **Automated Testing**:
 
-  - The CI server must run mvn test upon receiving a webhook event.
-  - The webhook payload should specify the branch where the change was made.
-  - The CI server should detect changes and execute the appropriate tests.
+  - The CI server run mvn test upon receiving a webhook event.
+  - The Ci server recives the specific branch in the webhook payload where the change was made.
+  - The CI server detects changes and execute the appropriate tests.
 
 - **CI Result Notification**:
 
-  - The CI server must notify users about build results through at least one of the following:
-    1. Commit status update (via GitHub REST API).
-    2. Email notification to project members.
+  - The CI server notifies users about build results through commit status updates via the GitHub REST API.
 
 - **Version Control and Traceability**:
 
-  - Each CI run must be associated with a specific Git commit.
-  - The commit history must follow best practices。
-  - The CI server should maintain a history of past builds, with each build having a unique URL for logs.
+  - Each CI run is associated with a specific Git commit.
+  - The CI server maintains a history of past builds, with each build having a unique URL for logs.
 
 - **Documentation**:
 
-  - All public classes and methods must have API documentation (e.g., JavaDoc).
-  - A comprehensive README must be included, documenting：
+  - All public classes and methods have API documentation (e.g., JavaDoc).
+  - A comprehensive README, documenting：
     - How to set up and run the CI server
     - Dependencies and required configurations
     - Contributions of team members
     - How the CI server is implemented and tested
 
 - **Webhook Configuration**:
-  - Configure your Git platform (e.g., GitHub) to trigger the CI server by setting the webhook URL to point to your CI server's public URL form ngrok.
-
-## 📂 Project Structure:
-
-```console
-// todo: Update project structure
-
-/DD2480
-├── /.github                  # CI/CD in GitHub
-├── /src
-│   ├── /main
-│   │   └── /decide
-│   │       ├── /application  # Main-function
-│   │       ├── /core         # Core-functions
-│   │       ├── /model        # Parameters etc
-│   │       └── /util         # Help-functions
-│   ├── /test
-│   │   ├── /decide
-|   |   |   ├── /decider      # Test entire program
-|   |   |   └── /lic_judge    # LIC Tests
-│   │   └── /resources        # Test input-files
-├── /target                   # Generated class-files etc
-├── /.gitignore
-├── /pom.xml                  # mvn config
-├── /docs                     # Project documentation
-└── README.md                 # Project overview
-```
+  - Configure GitHub to trigger the CI server by setting the webhook URL to point to your CI server's public URL form ngrok.
 
 ## ⚙️ Running the Project with Maven
 
@@ -76,6 +46,10 @@ Before running the project, ensure you have Maven and Java installed. The requir
 - **Java version:** 17.0.2
 
 If you haven’t installed Maven yet, follow the instructions [here](https://maven.apache.org/install.html).
+
+Then you need to generate a personal github token [here]https://github.com/settings/personal-access-tokens
+
+After that add it as a system enviroment varible called GITHUB_TOKEN.
 
 ### Build the Project
 
@@ -90,7 +64,7 @@ mvn clean install
 Execute the following command to start the application:
 
 ```console
-mvn mvn exec:java -Dexec.mainClass=application.CiServer
+mvn exec:java
 ```
 
 ### Running Tests
@@ -105,21 +79,15 @@ mvn test
 
 #### Run single test
 
-To run a specific test class, for example LIC0 use:
+To run a specific test class, for example CompileServiceTest use:
 
 ```console
-mvn test -Dtest=JsonParserTest
+mvn test -Dtest=CompileServiceTest
 ```
 
 ## Test Builds Folder
 
-Before running tests that depend on build logs, you must unzip the `/testBuilds` folder. This folder contains the necessary log files required for testing.
-
-For example, if your project contains a zipped file named `testBuilds.zip` in the project root, you can unzip it using the following command:
-
-````console
-unzip testBuilds.zip -d testBuilds
-
+The testBuilds.zip file contains builds used for testing core functions.
 
 ## 🤝 Statement of contributions
 
@@ -152,9 +120,8 @@ Before running tests that depend on build logs, unzip the /testBuilds folder. Th
   - Added comprehensive Javadoc to /services functions and classes.
 
 - **Max Linghag Ahlgren**:
-  - Updated the README
-  - Added a new handler in the build process to support additional CI functionality.
-  - Fixed build issues by adding the /builds folder.
+  - Added handlers to process webhook events and trigger CI workflows.
+  - Implemented core logic for processing incoming Git webhook events.
 
 - **Simon Li (ssimli)**:
   - Developed and merged tests for the notification service.
@@ -162,14 +129,17 @@ Before running tests that depend on build logs, unzip the /testBuilds folder. Th
 
 - **Yuhang Lin**:
   - Updated the webhook log files to ensure accurate logging of webhook events.
+  - Designed a modular and scalable architecture.
+  - Converted javadocs into html format.
 
 - **Giacomo Ricco**:
   - Coordinated the team and contributed to project documentation and overall design.
+  - Fixed a detailed report covering performance, collaboration and error analysis.
 
 ### Additional Documentation:
 - "Way of working" docs – Giacomo Ricco
 
-````
+```
 
 ## 📜 Javadoc & API Documentation
 
