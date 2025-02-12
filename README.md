@@ -34,7 +34,26 @@ This project involves developing a lightweight Continuous Integration (CI) serve
     - How the CI server is implemented and tested
 
 - **Webhook Configuration**:
+
   - Configure GitHub to trigger the CI server by setting the webhook URL to point to your CI server's public URL form ngrok.
+
+- **URLS**:
+
+```console
+/webhook              for webook listener
+```
+
+```console
+/history              history of the past builds
+```
+
+```console
+/docs                 for documentation
+```
+
+```console
+/health               for server health check
+```
 
 ## ⚙️ Running the Project with Maven
 
