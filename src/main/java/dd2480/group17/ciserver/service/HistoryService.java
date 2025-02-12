@@ -45,4 +45,20 @@ public class HistoryService {
         return logEntries;
     }
 
+    /**
+     * Checks if a commit ID exists in the list of log entries
+     *
+     * @param commitId   the commit ID to search for
+     * @param logEntries the list of log entries to search
+     * @return true if the commit ID exists in the list of log entries, false
+     *         otherwise
+     */
+    public boolean commitIdExists(String commitId, List<LogDTO> logEntries) {
+        for (LogDTO logDTO : logEntries) {
+            if (logDTO.getCommitId().equals(commitId)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
