@@ -21,7 +21,6 @@ public class WebhookService {
     private static final CompileService compileService = new CompileService();
     private static final TestService testService = new TestService();
     private static final NotificationService notificationService = new NotificationService();
-    private static final HistoryService historyService = new HistoryService();
     private static final Logger logger = new Logger();
 
     /**
@@ -87,7 +86,6 @@ public class WebhookService {
             } else {
                 System.out.println("test and compile: something went wrong");
                 // Notify failure to clone repository
-                // notificationService.notifyFailure("Failed to clone repository.");
             }
         } catch (Exception e) {
             System.out.println("An error occurred during processing: " + e.getMessage());
