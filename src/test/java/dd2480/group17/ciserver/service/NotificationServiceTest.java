@@ -23,7 +23,7 @@ public class NotificationServiceTest {
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         // Assert that the response status code is 200 (OK)
-        assertEquals(200, response.statusCode(), "GitHub API should be available.");
+        assertEquals(505, response.statusCode(), "GitHub API should be available.");
     }
 
     @Test
