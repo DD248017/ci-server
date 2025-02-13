@@ -1,4 +1,4 @@
-# 🚀 DD2480 Assignment 2 Overview
+tes# 🚀 DD2480 Assignment 2 Overview
 
 This project involves developing a lightweight Continuous Integration (CI) server that automatically compiles, tests, and reports build results for a given repository. The CI server listens for webhook triggers from GitHub, pulls the latest code changes, and runs `mvn compile` and `mvn test` to ensure code integrity. It then notifies users of the build results through commit status updates or email notifications. The project also requires proper repository structuring, clear documentation, and adherence to software engineering best practices, including well-structured commits and collaboration. Additionally, advanced features like build history tracking and enhanced automation can be implemented for distinction.
 
