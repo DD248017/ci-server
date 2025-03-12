@@ -92,7 +92,7 @@ public class HistoryServiceTest {
         HistoryService historyService = new HistoryService();
         List<LogDTO> logs = historyService.processAllLogsInDirectory(tempLogsDir.toString());
 
-        assertNotNull(logs);
+        assertNull(logs);
         assertEquals(1, logs.size(), "Only .log files should be processed.");
     }
 }
